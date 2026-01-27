@@ -158,7 +158,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="form-group checkbox-group">
                         <label>
                             <input type="checkbox" name="acepta_terminos" required>
-                            Acepto los Términos y condiciones
+                            Acepto los <a href="#" id="openTerminos" style="color: #2196F3; text-decoration: none;">términos y condiciones</a>.
                         </label>
                     </div>
                 </form>
@@ -206,8 +206,6 @@ if (session_status() === PHP_SESSION_NONE) {
                         <p>Título de especialidad</p>
                     </div>
                 </div>
-
-                <button class="btn btn-secondary" onclick="skipDocs()">Elegir de la galería</button>
                 
                 <div class="nav-buttons">
                     <button class="btn btn-next" onclick="goNext()">Siguiente</button>
@@ -227,8 +225,6 @@ if (session_status() === PHP_SESSION_NONE) {
                     </div>
                     <input type="file" name="foto_documento_identidad" accept="image/*" hidden>
                 </div>
-
-                <button class="btn btn-secondary" onclick="document.querySelector('[name=&quot;foto_documento_identidad&quot;]').click()">Elegir de la galería</button>
                 
                 <div class="nav-buttons">
                     <button class="btn btn-next" onclick="goNext()">Siguiente</button>
@@ -248,8 +244,6 @@ if (session_status() === PHP_SESSION_NONE) {
                     </div>
                     <input type="file" name="selfie_con_tarjeta" accept="image/*" hidden>
                 </div>
-
-                <button class="btn btn-secondary" onclick="document.querySelector('[name=&quot;selfie_con_tarjeta&quot;]').click()">Selecciona una foto</button>
                 
                 <div class="nav-buttons">
                     <button class="btn btn-next" onclick="goNext()">Enviar</button>
@@ -259,6 +253,47 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
     </div>
 
+    <!-- Modal de Términos y Condiciones -->
+    <div id="terminosModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; overflow: auto; padding: 20px;">
+        <div style="position: relative; max-width: 600px; margin: 40px auto; background: white; border-radius: 15px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); max-height: 80vh; overflow-y: auto;">
+            <button onclick="document.getElementById('terminosModal').style.display='none'" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 28px; cursor: pointer; color: #666; line-height: 1;">×</button>
+            
+            <h2 style="color: #2196F3; margin-bottom: 20px; font-size: 24px; text-align: center;">Términos y Condiciones</h2>
+            
+            <div style="color: #333; line-height: 1.6; font-size: 14px;">
+                <p style="margin-bottom: 15px;">• El médico acepta que ejerce su profesión de manera independiente y por su propia cuenta y riesgo.</p>
+                
+                <p style="margin-bottom: 15px;">• SaluDrive es exclusivamente un portal de contacto. La plataforma no asume responsabilidad alguna por el acto médico, diagnósticos o tratamientos. El médico asume cualquier reclamación legal derivada de su ejercicio.</p>
+                
+                <p style="margin-bottom: 15px;">• El pago de la recarga otorga el derecho de uso de la herramienta tecnológica, no constituye una relación laboral ni un seguro de cobertura.</p>
+                
+                <p style="margin-bottom: 15px;">• El profesional debe verificar la identidad del paciente antes de brindar atención.</p>
+                
+                <p style="margin-bottom: 15px;">• El profesional acepta las políticas de privacidad y manejo de datos personales de SaluDrive.</p>
+                
+                <p style="margin-bottom: 15px;">• SaluDrive se reserva el derecho de suspender o cancelar cuentas que incumplan estos términos.</p>
+                
+                <p style="margin-bottom: 15px;">• Al registrarse, el profesional certifica que cuenta con todas las certificaciones, licencias y seguros necesarios para ejercer su profesión.</p>
+            </div>
+            
+            <button onclick="document.getElementById('terminosModal').style.display='none'" style="width: 100%; padding: 12px; background: #2196F3; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 20px;">Entendido</button>
+        </div>
+    </div>
+
     <script src="<?php echo APP_URL; ?>/public/js/register-pro.js"></script>
+    <script>
+        // Abrir modal de términos
+        document.getElementById('openTerminos')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('terminosModal').style.display = 'block';
+        });
+        
+        // Cerrar modal al hacer clic fuera
+        document.getElementById('terminosModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>

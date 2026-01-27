@@ -204,14 +204,20 @@ class AuthController {
                 mkdir($uploadDir, 0777, true);
             }
             
+            // Debug: Log archivos recibidos
+            error_log("Archivos recibidos: " . json_encode(array_keys($_FILES)));
+            
             // Procesar archivos subidos
             $archivos = [];
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/webp', 'application/pdf'];
             
             foreach ($_FILES as $key => $file) {
+                error_log("Procesando archivo: $key, error: {$file['error']}, type: {$file['type']}");
+                
                 if ($file['error'] === UPLOAD_ERR_OK) {
                     if (!in_array($file['type'], $allowedTypes)) {
-                        echo json_encode(['success' => false, 'message' => 'Tipo de archivo no permitido']);
+                        error_log("Tipo de archivo no permitido: {$file['type']}");
+                        echo json_encode(['success' => false, 'message' => "Tipo de archivo no permitido: {$file['type']}"]);
                         exit;
                     }
                     
@@ -221,9 +227,16 @@ class AuthController {
                     
                     if (move_uploaded_file($file['tmp_name'], $filepath)) {
                         $archivos[$key] = $filename;
+                        error_log("Archivo guardado: $key => $filename");
+                    } else {
+                        error_log("Error al mover archivo: $key");
                     }
+                } else {
+                    error_log("Error en archivo $key: {$file['error']}");
                 }
             }
+            
+            error_log("Archivos procesados: " . json_encode($archivos));
             
             // Iniciar transacción
             $this->db->beginTransaction();

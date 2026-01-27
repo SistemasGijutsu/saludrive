@@ -255,6 +255,19 @@ function submitForm() {
 
     // Asegurar que todos los archivos estén en formData
     saveFormData();
+    
+    // Recolectar TODOS los archivos de todos los pasos
+    document.querySelectorAll('input[type="file"]').forEach(input => {
+        if (input.files && input.files[0]) {
+            formData.set(input.name, input.files[0]);
+            console.log('Agregando archivo:', input.name, input.files[0].name);
+        }
+    });
+
+    console.log('FormData entries:');
+    for (let pair of formData.entries()) {
+        console.log(pair[0] + ':', pair[1]);
+    }
 
     // Enviar formulario
     fetch('/saludrive/routes/router.php?action=register_process', {
