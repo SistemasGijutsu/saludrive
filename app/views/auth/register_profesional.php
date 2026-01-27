@@ -219,11 +219,12 @@ if (session_status() === PHP_SESSION_NONE) {
                 <h2>Documento de identidad</h2>
                 
                 <div class="id-card-preview">
-                    <div class="id-placeholder">
+                    <div class="id-placeholder" id="idPlaceholder">
                         <span class="icon">🪪</span>
                         <p>Toma o elige una foto de tu documento de identidad original que utilizo junto a tu rostro, permitiendo visualizar tu rostro y la documentación</p>
                     </div>
-                    <input type="file" name="foto_documento_identidad" accept="image/*" hidden>
+                    <input type="file" name="foto_documento_identidad" id="idInputGallery" accept="image/*" hidden>
+                    <input type="file" name="foto_documento_identidad_camera" id="idInputCamera" accept="image/*" capture="environment" hidden>
                 </div>
                 
                 <div class="nav-buttons">
@@ -238,11 +239,12 @@ if (session_status() === PHP_SESSION_NONE) {
                 <h2>Selfie con tarjeta profesional</h2>
                 
                 <div class="selfie-preview">
-                    <div class="selfie-placeholder">
+                    <div class="selfie-placeholder" id="selfiePlaceholder">
                         <span class="icon">🤳</span>
                         <p>Tómate una selfie sosteniéndote tu tarjeta profesional junto a tu rostro, permitiéndonos visualizar tu rostro y la documentación</p>
                     </div>
-                    <input type="file" name="selfie_con_tarjeta" accept="image/*" hidden>
+                    <input type="file" name="selfie_con_tarjeta" id="selfieInputGallery" accept="image/*" hidden>
+                    <input type="file" name="selfie_con_tarjeta_camera" id="selfieInputCamera" accept="image/*" capture="user" hidden>
                 </div>
                 
                 <div class="nav-buttons">
@@ -252,6 +254,46 @@ if (session_status() === PHP_SESSION_NONE) {
 
         </div>
     </div>
+
+    <!-- Modal de opciones de foto -->
+    <div id="photoOptionsModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;">
+        <div onclick="document.getElementById('photoOptionsModal').style.display='none'" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4);"></div>
+        <div style="position: absolute; bottom: 0; left: 0; width: 100%; background: white; border-radius: 20px 20px 0 0; padding: 20px 20px 30px; box-shadow: 0 -2px 20px rgba(0,0,0,0.1); animation: slideUp 0.3s ease;">
+            <div style="width: 50px; height: 5px; background: #e0e0e0; border-radius: 3px; margin: 0 auto 25px;"></div>
+            
+            <button onclick="selectPhotoOption('camera')" style="width: 100%; padding: 18px; background: #f8f9fa; border: none; border-radius: 12px; font-size: 17px; cursor: pointer; margin-bottom: 12px; display: flex; align-items: center; gap: 15px; transition: all 0.2s; font-weight: 500; color: #333;">
+                <span style="font-size: 28px;">📷</span>
+                <span>Tomar foto</span>
+            </button>
+            
+            <button onclick="selectPhotoOption('gallery')" style="width: 100%; padding: 18px; background: #f8f9fa; border: none; border-radius: 12px; font-size: 17px; cursor: pointer; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; transition: all 0.2s; font-weight: 500; color: #333;">
+                <span style="font-size: 28px;">🖼️</span>
+                <span>Elegir de galería</span>
+            </button>
+            
+            <button onclick="document.getElementById('photoOptionsModal').style.display='none'" style="width: 100%; padding: 18px; background: white; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 17px; cursor: pointer; color: #666; font-weight: 500; transition: all 0.2s;">
+                Cancelar
+            </button>
+        </div>
+    </div>
+
+    <style>
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        #photoOptionsModal button:active {
+            transform: scale(0.98);
+            opacity: 0.8;
+        }
+    </style>
 
     <!-- Modal de Términos y Condiciones -->
     <div id="terminosModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; overflow: auto; padding: 20px;">
@@ -282,6 +324,79 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <script src="<?php echo APP_URL; ?>/public/js/register-pro.js"></script>
     <script>
+        let currentPhotoType = null; // 'id' o 'selfie'
+        
+        // Abrir modal de opciones cuando hacen clic en placeholder de documento
+        document.getElementById('idPlaceholder')?.addEventListener('click', function() {
+            currentPhotoType = 'id';
+            document.getElementById('photoOptionsModal').style.display = 'block';
+        });
+        
+        // Abrir modal de opciones cuando hacen clic en placeholder de selfie
+        document.getElementById('selfiePlaceholder')?.addEventListener('click', function() {
+            currentPhotoType = 'selfie';
+            document.getElementById('photoOptionsModal').style.display = 'block';
+        });
+        
+        // Manejar selección de opción
+        function selectPhotoOption(option) {
+            document.getElementById('photoOptionsModal').style.display = 'none';
+            
+            if (currentPhotoType === 'id') {
+                if (option === 'camera') {
+                    document.getElementById('idInputCamera').click();
+                } else {
+                    document.getElementById('idInputGallery').click();
+                }
+            } else if (currentPhotoType === 'selfie') {
+                if (option === 'camera') {
+                    document.getElementById('selfieInputCamera').click();
+                } else {
+                    document.getElementById('selfieInputGallery').click();
+                }
+            }
+        }
+        
+        // Preview para documento de identidad (ambos inputs)
+        ['idInputGallery', 'idInputCamera'].forEach(inputId => {
+            document.getElementById(inputId)?.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // Sincronizar con el otro input
+                    const otherInput = inputId === 'idInputGallery' ? 'idInputCamera' : 'idInputGallery';
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    document.getElementById(otherInput).files = dataTransfer.files;
+                    
+                    // Mostrar preview
+                    const placeholder = document.getElementById('idPlaceholder');
+                    placeholder.innerHTML = '<span class="icon">✓</span><p>Documento cargado correctamente</p>';
+                    placeholder.style.borderColor = '#2196F3';
+                    placeholder.style.background = '#e8f4f8';
+                }
+            });
+        });
+        
+        // Preview para selfie (ambos inputs)
+        ['selfieInputGallery', 'selfieInputCamera'].forEach(inputId => {
+            document.getElementById(inputId)?.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // Sincronizar con el otro input
+                    const otherInput = inputId === 'selfieInputGallery' ? 'selfieInputCamera' : 'selfieInputGallery';
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    document.getElementById(otherInput).files = dataTransfer.files;
+                    
+                    // Mostrar preview
+                    const placeholder = document.getElementById('selfiePlaceholder');
+                    placeholder.innerHTML = '<span class="icon">✓</span><p>Selfie cargada correctamente</p>';
+                    placeholder.style.borderColor = '#2196F3';
+                    placeholder.style.background = '#e8f4f8';
+                }
+            });
+        });
+        
         // Abrir modal de términos
         document.getElementById('openTerminos')?.addEventListener('click', function(e) {
             e.preventDefault();

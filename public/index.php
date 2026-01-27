@@ -56,6 +56,31 @@
             
             <button class="btn btn-primary" onclick="sendVerificationCode()">SIGUIENTE</button>
             
+            <button class="btn btn-link-alt" onclick="showEmailLoginScreen()">Ingresar con correo</button>
+            
+            <button class="btn-back" onclick="showWelcomeScreen()">← Volver</button>
+        </div>
+
+        <!-- Pantalla de Login con Email -->
+        <div class="screen hidden" id="emailLoginScreen">
+            <div class="logo-container">
+                <img src="images/saludrive.png" alt="SaluDrive Logo" class="logo-image">
+            </div>
+            
+            <form id="emailLoginForm" class="email-login-form">
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder="Correo electrónico" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">INGRESAR</button>
+                
+                <button type="button" class="btn btn-link-alt" onclick="showLoginScreen()">Ingresar con teléfono</button>
+            </form>
+            
             <button class="btn-back" onclick="showWelcomeScreen()">← Volver</button>
         </div>
 

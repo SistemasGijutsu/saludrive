@@ -34,12 +34,24 @@ function showLoginForm() {
 }
 
 function showLoginScreen() {
+    document.getElementById('welcomeScreen').classList.add('hidden');
+    document.getElementById('roleScreen').classList.add('hidden');
     document.getElementById('loginScreen').classList.remove('hidden');
+    document.getElementById('emailLoginScreen')?.classList.add('hidden');
+    document.getElementById('verificationScreen')?.classList.add('hidden');
+}
+
+function showEmailLoginScreen() {
+    document.getElementById('welcomeScreen').classList.add('hidden');
+    document.getElementById('roleScreen').classList.add('hidden');
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('emailLoginScreen').classList.remove('hidden');
     document.getElementById('verificationScreen')?.classList.add('hidden');
 }
 
 function showVerificationScreen() {
     document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('emailLoginScreen')?.classList.add('hidden');
     document.getElementById('verificationScreen').classList.remove('hidden');
 }
 
@@ -188,6 +200,7 @@ function resendCode() {
 // Validación del formulario de login
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
+    const emailLoginForm = document.getElementById('emailLoginForm');
     
     if (loginForm) {
         loginForm.addEventListener('submit', function(e) {
@@ -207,6 +220,54 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('Por favor, ingresa un correo electrónico válido');
                 return false;
             }
+        });
+    }
+    
+    // Manejar login con email
+    if (emailLoginForm) {
+        emailLoginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (!email || !password) {
+                alert('Por favor, completa todos los campos');
+                return;
+            }
+            
+            // Validar formato de email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Por favor, ingresa un correo electrónico válido');
+                return;
+            }
+            
+            // Enviar solicitud de login
+            fetch('/saludrive/routes/router.php?action=login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+            })
+            .then(response => {
+                // Manejar redirección
+                if (response.redirected) {
+                    window.location.href = response.url;
+                    return;
+                }
+                return response.text();
+            })
+            .then(text => {
+                if (text && text.includes('error')) {
+                    alert('Credenciales incorrectas. Intenta nuevamente.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al iniciar sesión. Intenta nuevamente.');
+            });
         });
     }
 });

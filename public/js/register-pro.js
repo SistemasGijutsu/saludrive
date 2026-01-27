@@ -184,43 +184,13 @@ document.querySelectorAll('.doc-upload-card').forEach((card) => {
     }
 });
 
-// Documento de identidad
+// Documento de identidad - Eliminado listener automático para usar modal
 const idPlaceholder = document.querySelector('#step5 .id-placeholder');
 const idInput = document.querySelector('#step5 [name="foto_documento_identidad"]');
 
-if (idPlaceholder && idInput) {
-    idPlaceholder.addEventListener('click', function() {
-        idInput.click();
-    });
-    
-    idInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            formData.set('foto_documento_identidad', file);
-            idPlaceholder.style.borderColor = 'var(--primary-color)';
-            idPlaceholder.innerHTML = '<span class="icon">✓</span><p>Documento cargado correctamente</p>';
-        }
-    });
-}
-
-// Selfie con tarjeta
+// Selfie con tarjeta - Eliminado listener automático para usar modal
 const selfiePlaceholder = document.querySelector('#step6 .selfie-placeholder');
 const selfieInput = document.querySelector('#step6 [name="selfie_con_tarjeta"]');
-
-if (selfiePlaceholder && selfieInput) {
-    selfiePlaceholder.addEventListener('click', function() {
-        selfieInput.click();
-    });
-    
-    selfieInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            formData.set('selfie_con_tarjeta', file);
-            selfiePlaceholder.style.borderColor = 'var(--primary-color)';
-            selfiePlaceholder.innerHTML = '<span class="icon">✓</span><p>Selfie cargada correctamente</p>';
-        }
-    });
-}
 
 // Funciones auxiliares
 function skipDocs() {

@@ -4,17 +4,22 @@
     max-width: 500px;
     margin: 0 auto;
     padding: 20px;
+    position: relative;
+    min-height: 100vh;
 }
 
 .register-pro-screen {
     max-width: 500px;
     margin: 0 auto;
     padding: 20px;
+    position: relative;
 }
 
 .step-content {
     display: none;
     animation: fadeIn 0.3s ease;
+    position: relative;
+    padding-top: 50px;
 }
 
 .step-content.active {
@@ -23,25 +28,29 @@
 
 /* Botón volver arriba */
 .btn-back-top {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background: transparent;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background: white;
     border: none;
     font-size: 1.8rem;
     color: var(--primary-color);
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 8px 15px;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
-    z-index: 10;
+    z-index: 1000;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-back-top:hover {
     transform: translateX(-3px);
-}
-
-.step-content {
-    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 /* Botones de navegación integrados */

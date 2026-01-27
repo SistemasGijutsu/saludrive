@@ -391,6 +391,56 @@ body {
     }
 }
 
+/* Formulario de login con email */
+.email-login-form {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.email-login-form .form-group {
+    margin-bottom: 0;
+}
+
+.email-login-form .form-group input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #fafafa;
+}
+
+.email-login-form .form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(59, 130, 196, 0.1);
+}
+
+.email-login-form .btn-primary {
+    margin-top: 10px;
+}
+
+.btn-link-alt {
+    background: transparent;
+    border: none;
+    color: var(--primary-color);
+    font-size: 0.95rem;
+    cursor: pointer;
+    padding: 10px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-link-alt:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
 /* PWA - Ocultar scrollbar cuando se instala */
 @media all and (display-mode: standalone) {
     body {
