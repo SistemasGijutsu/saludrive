@@ -1,0 +1,399 @@
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #3b82c4;
+    --secondary-color: #5ba4d9;
+    --patient-color: #7dc5ed;
+    --professional-color: #6ba8d8;
+    --text-dark: #333;
+    --text-light: #666;
+    --bg-light: #f5f5f5;
+    --white: #ffffff;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+}
+
+.screen {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.screen.hidden {
+    display: none;
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+/* Logo y encabezado */
+.logo-container {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.logo-container.small {
+    margin-bottom: 30px;
+}
+
+.logo-image {
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.logo {
+    width: 150px;
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+.logo-text {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.logo-text span {
+    font-weight: 600;
+}
+
+/* Contenedor de botones */
+.button-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+/* Estilos de botones */
+.btn {
+    width: 100%;
+    max-width: 250px;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: none;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(59, 130, 196, 0.3);
+}
+
+.btn-primary:hover {
+    background-color: #2d6ba3;
+    box-shadow: 0 6px 20px rgba(59, 130, 196, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: var(--white);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+.btn-role {
+    padding: 16px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.btn-patient {
+    background-color: var(--patient-color);
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(125, 197, 237, 0.3);
+}
+
+.btn-patient:hover {
+    background-color: #5aa8d1;
+    box-shadow: 0 6px 20px rgba(125, 197, 237, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-professional {
+    background-color: var(--professional-color);
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(107, 168, 216, 0.3);
+}
+
+.btn-professional:hover {
+    background-color: #5291c2;
+    box-shadow: 0 6px 20px rgba(107, 168, 216, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-back {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: transparent;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+    color: var(--secondary-color);
+    transform: translateX(-3px);
+}
+
+/* Enlaces */
+.link-info {
+    margin-top: 20px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.link-info:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+/* Formulario de login */
+.login-form {
+    width: 100%;
+    max-width: 300px;
+}
+
+.login-form h2 {
+    color: var(--text-dark);
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    color: var(--text-light);
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 196, 0.1);
+}
+
+.login-form .btn-primary {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.link-forgot {
+    display: block;
+    text-align: center;
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-top: 15px;
+}
+
+.link-forgot:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+/* Sistema de autenticación por teléfono */
+.phone-input-container {
+    width: 100%;
+    margin: 40px 0;
+}
+
+.phone-group {
+    display: flex;
+    align-items: center;
+    background: var(--bg-light);
+    border-radius: 25px;
+    padding: 5px 10px;
+    gap: 10px;
+}
+
+.country-code {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    background: var(--white);
+    border-radius: 20px;
+    font-weight: 600;
+    color: var(--text-dark);
+    white-space: nowrap;
+}
+
+.flag-icon {
+    width: 24px;
+    height: auto;
+    border-radius: 2px;
+}
+
+.phone-group input[type="tel"] {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 12px 10px;
+    font-size: 1rem;
+    color: var(--text-dark);
+    outline: none;
+}
+
+.phone-group input[type="tel"]::placeholder {
+    color: var(--text-light);
+}
+
+/* Pantalla de código de verificación */
+.verification-container {
+    width: 100%;
+    text-align: center;
+    margin: 30px 0;
+}
+
+.verification-container h3 {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin-bottom: 30px;
+    font-weight: 400;
+}
+
+.code-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.code-input {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #d1d5db;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    background: var(--white);
+    transition: all 0.3s ease;
+}
+
+.code-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: #f0f9ff;
+    transform: scale(1.05);
+}
+
+.btn-link {
+    background: transparent;
+    color: var(--primary-color);
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: opacity 0.3s ease;
+}
+
+.btn-link:hover {
+    opacity: 0.7;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.screen:not(.hidden) {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .container {
+        max-width: 100%;
+    }
+    
+    .screen {
+        padding: 30px 20px;
+        min-height: 450px;
+    }
+    
+    .logo-text {
+        font-size: 2rem;
+    }
+    
+    .btn {
+        max-width: 100%;
+    }
+}
+
+/* PWA - Ocultar scrollbar cuando se instala */
+@media all and (display-mode: standalone) {
+    body {
+        overflow: hidden;
+    }
+}

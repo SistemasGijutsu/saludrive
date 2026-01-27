@@ -1,0 +1,15 @@
+RewriteEngine On
+RewriteBase /saludrive/
+
+# Permitir acceso al router
+RewriteCond %{REQUEST_URI} ^/saludrive/routes/router\.php
+RewriteRule ^ - [L]
+
+# Evitar acceso directo a carpetas del sistema (excepto router.php)
+RewriteCond %{REQUEST_URI} ^/saludrive/(app|config)/
+RewriteRule ^(.*)$ - [F,L]
+
+# Redirigir todo el tráfico restante a public/
+RewriteCond %{REQUEST_URI} !^/saludrive/public/
+RewriteCond %{REQUEST_URI} !^/saludrive/routes/router\.php
+RewriteRule ^(.*)$ public/$1 [L]

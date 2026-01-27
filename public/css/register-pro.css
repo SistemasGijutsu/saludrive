@@ -1,0 +1,458 @@
+/* Estilos para registro de profesionales */
+
+.container-pro {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.register-pro-screen {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.step-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.step-content.active {
+    display: block;
+}
+
+/* Botón volver arriba */
+.btn-back-top {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: transparent;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.btn-back-top:hover {
+    transform: translateX(-3px);
+}
+
+.step-content {
+    position: relative;
+}
+
+/* Botones de navegación integrados */
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.nav-buttons .btn {
+    padding: 12px 50px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.nav-buttons .btn-back {
+    background: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.nav-buttons .btn-back:hover {
+    background: #f0f0f0;
+}
+
+.nav-buttons .btn-next {
+    background: var(--primary-color);
+    color: white;
+}
+
+.nav-buttons .btn-next:hover {
+    background: var(--secondary-color);
+}
+
+/* Paso 1: Diseño tipo Frame 29 */
+.welcome-info-box {
+    background: var(--primary-color);
+    color: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.welcome-info-box h2 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.info-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.info-item .icon {
+    font-size: 1.3rem;
+}
+
+.info-item span:last-child {
+    font-size: 0.95rem;
+}
+
+.section-title {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin: 20px 0 15px;
+}
+
+.specialties-grid-main {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 30px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.specialty-btn-main {
+    padding: 16px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.specialty-btn-main:hover {
+    background: var(--secondary-color);
+    transform: translateX(5px);
+}
+
+.specialty-btn-main:first-child {
+    background: #a0c4d9;
+    color: var(--primary-color);
+}
+
+.bottom-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.info-link {
+    color: var(--primary-color);
+    text-align: center;
+    margin: 10px 0;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+/* Paso 2: Especialidad específica */
+.selected-specialty-name {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    margin: 20px 0;
+}
+
+.specialty-options {
+    margin: 30px 0;
+}
+
+.specialty-option-btn {
+    width: 100%;
+    padding: 20px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: all 0.3s ease;
+}
+
+.specialty-option-btn .icon {
+    font-size: 1.5rem;
+}
+
+.specialty-option-btn:hover {
+    background: var(--secondary-color);
+}
+
+/* Paso 3: Formulario */
+.photo-upload {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.photo-placeholder {
+    width: 120px;
+    height: 120px;
+    margin: 15px auto;
+    border: 3px dashed #ddd;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.photo-placeholder:hover {
+    border-color: var(--primary-color);
+    background: #f8f9fa;
+}
+
+.photo-placeholder .icon {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+.photo-placeholder span:last-child {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.helper-text {
+    color: #999;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+.form-row {
+    margin-bottom: 20px;
+}
+
+.form-row.two-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-group label {
+    display: block;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.transport-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.transport-card {
+    padding: 20px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.transport-card input[type="radio"] {
+    display: none;
+}
+
+.transport-card input[type="radio"]:checked + span {
+    color: white;
+}
+
+.transport-card:has(input:checked) {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.transport-card span {
+    font-size: 1.1rem;
+}
+
+.checkbox-group {
+    margin: 20px 0;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-transform: none;
+    font-weight: normal;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto;
+    cursor: pointer;
+}
+
+/* Paso 4: Documentos */
+.btn-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #999;
+}
+
+.documents-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.doc-upload-card {
+    aspect-ratio: 1;
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.doc-upload-card:hover {
+    border-color: var(--primary-color);
+    background: #f8f9fa;
+}
+
+.doc-icon {
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+}
+
+.doc-upload-card p {
+    font-size: 0.75rem;
+    color: #666;
+    text-align: center;
+    line-height: 1.2;
+    padding: 0 5px;
+}
+
+/* Paso 5 y 6: Documento ID y Selfie */
+.id-card-preview,
+.selfie-preview {
+    margin: 30px 0;
+}
+
+.id-placeholder,
+.selfie-placeholder {
+    min-height: 300px;
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.id-placeholder .icon,
+.selfie-placeholder .icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.id-placeholder p,
+.selfie-placeholder p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Botones */
+.btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--secondary-color);
+}
+
+.btn-secondary {
+    background: white;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .specialties-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .documents-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .form-row.two-cols {
+        grid-template-columns: 1fr;
+    }
+}
