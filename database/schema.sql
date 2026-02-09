@@ -1,10 +1,10 @@
--- Script SQL para crear la base de datos de SaluDrive
+-- Script SQL para crear la base de datos de SaludGo
 -- Ejecutar este script en phpMyAdmin (http://localhost:8080/phpmyadmin/)
 
 -- Crear base de datos
-CREATE DATABASE IF NOT EXISTS saludrive CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE IF NOT EXISTS saludgo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-USE saludrive;
+USE saludgo;
 
 -- Tabla de usuarios (base para pacientes y profesionales)
 CREATE TABLE IF NOT EXISTS usuarios (

@@ -1,12 +1,12 @@
-# SaluDrive - PWA de Gestión de Salud
+# SaludGo - PWA de Gestión de Salud
 
 ## Descripción
-SaluDrive es una Progressive Web App (PWA) que conecta pacientes con profesionales de la salud de manera segura y eficiente.
+SaludGo es una Progressive Web App (PWA) que conecta pacientes con profesionales de la salud de manera segura y eficiente.
 
 ## Estructura del Proyecto
 
 ```
-saludrive/
+saludgo/
 ├── app/
 │   ├── controllers/       # Controladores de la aplicación
 │   │   └── AuthController.php
@@ -61,12 +61,12 @@ saludrive/
 
 1. **Clonar/copiar el proyecto en htdocs**
    ```
-   c:\xampp\htdocs\saludrive
+   c:\xampp\htdocs\saludgo
    ```
 
 2. **Crear la base de datos**
    - Abrir phpMyAdmin: http://localhost:8080/phpmyadmin/
-   - Crear una nueva base de datos llamada `saludrive`
+   - Crear una nueva base de datos llamada `saludgo`
    - Importar el archivo `database/schema.sql`
 
 3. **Configurar la aplicación**
@@ -74,7 +74,7 @@ saludrive/
    - Verificar credenciales de base de datos
 
 4. **Acceder a la aplicación**
-   - URL: http://localhost/saludrive/public/
+   - URL: http://localhost/saludgo/public/
 
 ## Usuarios de Prueba
 
@@ -125,4 +125,4 @@ saludrive/
 
 ## Licencia
 
-Proyecto educativo - SaluDrive 2026
+Proyecto educativo - SaludGo 2026

@@ -1,9 +1,9 @@
-const CACHE_NAME = 'saludrive-v1';
+const CACHE_NAME = 'saludgo-v1';
 const urlsToCache = [
-  '/saludrive/public/',
-  '/saludrive/public/css/style.css',
-  '/saludrive/public/js/app.js',
-  '/saludrive/manifest.json'
+  '/saludgo/public/',
+  '/saludgo/public/css/style.css',
+  '/saludgo/public/js/app.js',
+  '/saludgo/manifest.json'
 ];
 
 // Instalación del Service Worker

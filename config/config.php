@@ -3,14 +3,14 @@
 
 // Configuración de la base de datos
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'saludrive');
+define('DB_NAME', 'saludgo');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');
 
 // Configuración de la aplicación
-define('APP_NAME', 'SaluDrive');
-define('APP_URL', 'http://localhost:8080/saludrive');
+define('APP_NAME', 'SaludGo');
+define('APP_URL', 'http://localhost:8080/saludgo');
 define('BASE_PATH', dirname(__DIR__));
 
 // Configuración de sesión

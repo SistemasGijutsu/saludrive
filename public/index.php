@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#3b82c4">
-    <title>SaluDrive - Bienvenido</title>
+    <title>SaludGo - Bienvenido</title>
     <link rel="manifest" href="../manifest.json">
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/png" href="../assets/icons/icon-72x72.png">
@@ -14,7 +14,7 @@
         <!-- Frame 1: Pantalla inicial con Registro/Login -->
         <div class="screen" id="welcomeScreen">
             <div class="logo-container">
-                <img src="images/saludrive.png" alt="SaluDrive Logo" class="logo-image">
+                <img src="images/saludgo01.png" alt="SaludGo Logo" class="logo-image">
             </div>
             
             <div class="button-container">
@@ -26,7 +26,7 @@
         <!-- Frame 2: Selección de rol -->
         <div class="screen hidden" id="roleScreen">
             <div class="logo-container">
-                <img src="images/saludrive.png" alt="SaluDrive Logo" class="logo-image">
+                <img src="images/saludgo01.png" alt="SaludGo Logo" class="logo-image">
             </div>
             
             <div class="button-container">
@@ -41,7 +41,7 @@
         <!-- Pantalla de Login - Ingreso de teléfono (Frame 3) -->
         <div class="screen hidden" id="loginScreen">
             <div class="logo-container">
-                <img src="images/saludrive.png" alt="SaluDrive Logo" class="logo-image">
+                <img src="images/saludgo01.png" alt="SaludGo Logo" class="logo-image">
             </div>
             
             <div class="phone-input-container">
@@ -64,7 +64,7 @@
         <!-- Pantalla de Login con Email -->
         <div class="screen hidden" id="emailLoginScreen">
             <div class="logo-container">
-                <img src="images/saludrive.png" alt="SaluDrive Logo" class="logo-image">
+                <img src="images/saludgo01.png" alt="SaludGo Logo" class="logo-image">
             </div>
             
             <form id="emailLoginForm" class="email-login-form">
@@ -87,7 +87,7 @@
         <!-- Pantalla de código de verificación (Frame 4) -->
         <div class="screen hidden" id="verificationScreen">
             <div class="logo-container small">
-                <img src="images/saludrive.png" alt="SaluDrive Logo" class="logo-image">
+                <img src="images/saludgo01.png" alt="SaludGo Logo" class="logo-image">
             </div>
             
             <div class="verification-container">

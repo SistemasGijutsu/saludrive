@@ -1,7 +1,7 @@
 // Registro del Service Worker para PWA
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/saludrive/service-worker.js')
+        navigator.serviceWorker.register('/saludgo/service-worker.js')
             .then(registration => {
                 console.log('Service Worker registrado con éxito:', registration);
             })
@@ -61,13 +61,13 @@ function selectRole(role) {
     sessionStorage.setItem('selectedRole', role);
     
     // Redirigir a la página de registro con el rol
-    window.location.href = `/saludrive/routes/router.php?action=register&role=${role}`;
+    window.location.href = `/saludgo/routes/router.php?action=register&role=${role}`;
 }
 
 // Mostrar información de la app
 function showAppInfo(event) {
     event.preventDefault();
-    alert('SaluDrive es una aplicación que conecta pacientes con profesionales de la salud de manera segura y eficiente.');
+    alert('SaludGo es una aplicación que conecta pacientes con profesionales de la salud de manera segura y eficiente.');
 }
 
 // Variables para el sistema de autenticación por teléfono
@@ -87,7 +87,7 @@ function sendVerificationCode() {
     phoneNumber = '+57' + phone;
     
     // Enviar solicitud al backend
-    fetch('/saludrive/routes/router.php?action=sendCode', {
+    fetch('/saludgo/routes/router.php?action=sendCode', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -164,7 +164,7 @@ function verifyCode() {
     }
     
     // Verificar el código
-    fetch('/saludrive/routes/router.php?action=verifyCode', {
+    fetch('/saludgo/routes/router.php?action=verifyCode', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Enviar solicitud de login
-            fetch('/saludrive/routes/router.php?action=login', {
+            fetch('/saludgo/routes/router.php?action=login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -291,6 +291,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
 // Cuando la app se instala
 window.addEventListener('appinstalled', () => {
-    console.log('SaluDrive se ha instalado correctamente');
+    console.log('SaludGo se ha instalado correctamente');
     deferredPrompt = null;
 });

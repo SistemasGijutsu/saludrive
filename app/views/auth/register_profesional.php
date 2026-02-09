@@ -8,7 +8,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro Profesional - SaluDrive</title>
+    <title>Registro Profesional - SaludGo</title>
     <link rel="stylesheet" href="<?php echo APP_URL; ?>/public/css/style.css">
     <link rel="stylesheet" href="<?php echo APP_URL; ?>/public/css/register-pro.css">
     <link rel="manifest" href="<?php echo APP_URL; ?>/manifest.json">
@@ -305,15 +305,15 @@ if (session_status() === PHP_SESSION_NONE) {
             <div style="color: #333; line-height: 1.6; font-size: 14px;">
                 <p style="margin-bottom: 15px;">• El médico acepta que ejerce su profesión de manera independiente y por su propia cuenta y riesgo.</p>
                 
-                <p style="margin-bottom: 15px;">• SaluDrive es exclusivamente un portal de contacto. La plataforma no asume responsabilidad alguna por el acto médico, diagnósticos o tratamientos. El médico asume cualquier reclamación legal derivada de su ejercicio.</p>
+                <p style="margin-bottom: 15px;">• SaludGo es exclusivamente un portal de contacto. La plataforma no asume responsabilidad alguna por el acto médico, diagnósticos o tratamientos. El médico asume cualquier reclamación legal derivada de su ejercicio.</p>
                 
                 <p style="margin-bottom: 15px;">• El pago de la recarga otorga el derecho de uso de la herramienta tecnológica, no constituye una relación laboral ni un seguro de cobertura.</p>
                 
                 <p style="margin-bottom: 15px;">• El profesional debe verificar la identidad del paciente antes de brindar atención.</p>
                 
-                <p style="margin-bottom: 15px;">• El profesional acepta las políticas de privacidad y manejo de datos personales de SaluDrive.</p>
+                <p style="margin-bottom: 15px;">• El profesional acepta las políticas de privacidad y manejo de datos personales de SaludGo.</p>
                 
-                <p style="margin-bottom: 15px;">• SaluDrive se reserva el derecho de suspender o cancelar cuentas que incumplan estos términos.</p>
+                <p style="margin-bottom: 15px;">• SaludGo se reserva el derecho de suspender o cancelar cuentas que incumplan estos términos.</p>
                 
                 <p style="margin-bottom: 15px;">• Al registrarse, el profesional certifica que cuenta con todas las certificaciones, licencias y seguros necesarios para ejercer su profesión.</p>
             </div>
@@ -368,11 +368,17 @@ if (session_status() === PHP_SESSION_NONE) {
                     dataTransfer.items.add(file);
                     document.getElementById(otherInput).files = dataTransfer.files;
                     
-                    // Mostrar preview
+                    // Mostrar preview con imagen real
                     const placeholder = document.getElementById('idPlaceholder');
-                    placeholder.innerHTML = '<span class="icon">✓</span><p>Documento cargado correctamente</p>';
-                    placeholder.style.borderColor = '#2196F3';
-                    placeholder.style.background = '#e8f4f8';
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        placeholder.style.backgroundImage = `url(${event.target.result})`;
+                        placeholder.style.backgroundSize = 'cover';
+                        placeholder.style.backgroundPosition = 'center';
+                        placeholder.style.borderColor = '#2196F3';
+                        placeholder.innerHTML = '';
+                    };
+                    reader.readAsDataURL(file);
                 }
             });
         });
@@ -388,11 +394,17 @@ if (session_status() === PHP_SESSION_NONE) {
                     dataTransfer.items.add(file);
                     document.getElementById(otherInput).files = dataTransfer.files;
                     
-                    // Mostrar preview
+                    // Mostrar preview con imagen real
                     const placeholder = document.getElementById('selfiePlaceholder');
-                    placeholder.innerHTML = '<span class="icon">✓</span><p>Selfie cargada correctamente</p>';
-                    placeholder.style.borderColor = '#2196F3';
-                    placeholder.style.background = '#e8f4f8';
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        placeholder.style.backgroundImage = `url(${event.target.result})`;
+                        placeholder.style.backgroundSize = 'cover';
+                        placeholder.style.backgroundPosition = 'center';
+                        placeholder.style.borderColor = '#2196F3';
+                        placeholder.innerHTML = '';
+                    };
+                    reader.readAsDataURL(file);
                 }
             });
         });

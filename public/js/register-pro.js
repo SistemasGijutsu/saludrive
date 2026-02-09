@@ -22,7 +22,7 @@ function prevStep(step) {
 // Funciones para botones fijos
 function goBack() {
     if (currentStep === 1) {
-        window.location.href = '/saludrive/public/';
+        window.location.href = '/saludgo/public/';
         return;
     }
     if (currentStep === 3) {
@@ -204,7 +204,7 @@ function chooseFromGallery() {
 
 function closeModal() {
     if (confirm('¿Estás seguro de que quieres cancelar el registro?')) {
-        window.location.href = '/saludrive/public/';
+        window.location.href = '/saludgo/public/';
     }
 }
 
@@ -240,7 +240,7 @@ function submitForm() {
     }
 
     // Enviar formulario
-    fetch('/saludrive/routes/router.php?action=register_process', {
+    fetch('/saludgo/routes/router.php?action=register_process', {
         method: 'POST',
         body: formData
     })
@@ -248,7 +248,7 @@ function submitForm() {
     .then(data => {
         if (data.success) {
             alert('Registro exitoso. Tu cuenta está pendiente de verificación.');
-            window.location.href = '/saludrive/public/';
+            window.location.href = '/saludgo/public/';
         } else {
             alert('Error: ' + (data.message || 'No se pudo completar el registro'));
             if (btn) {
