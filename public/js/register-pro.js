@@ -29,6 +29,10 @@ function goBack() {
         prevStep(1);
         return;
     }
+    if (currentStep === 4) {
+        prevStep(3);
+        return;
+    }
     prevStep(currentStep - 1);
 }
 
@@ -48,16 +52,7 @@ function goNext() {
     }
     
     if (currentStep === 4) {
-        nextStep(5);
-        return;
-    }
-    
-    if (currentStep === 5) {
-        nextStep(6);
-        return;
-    }
-    
-    if (currentStep === 6) {
+        // Validar que se hayan cargado los documentos mínimos requeridos
         submitForm();
         return;
     }
@@ -163,11 +158,16 @@ function saveFormData() {
 }
 
 // Manejar carga de documentos personales
+window.currentDocInput = null; // Referencia al input actual (global)
+
 document.querySelectorAll('.doc-upload-card').forEach((card) => {
     const input = card.querySelector('input[type="file"]');
     
     card.addEventListener('click', function() {
-        input.click();
+        // Guardar referencia al input y la tarjeta
+        window.currentDocInput = { input: input, card: card };
+        // Abrir modal de opciones
+        document.getElementById('photoOptionsModal').style.display = 'block';
     });
     
     if (input) {
@@ -179,24 +179,15 @@ document.querySelectorAll('.doc-upload-card').forEach((card) => {
                 card.style.background = '#e8f4f8';
                 const icon = card.querySelector('.doc-icon');
                 if (icon) icon.textContent = '✓';
+                
+                // Mostrar toast de confirmación
+                showToast('Archivo cargado correctamente ✓');
             }
         });
     }
 });
 
-// Documento de identidad - Eliminado listener automático para usar modal
-const idPlaceholder = document.querySelector('#step5 .id-placeholder');
-const idInput = document.querySelector('#step5 [name="foto_documento_identidad"]');
-
-// Selfie con tarjeta - Eliminado listener automático para usar modal
-const selfiePlaceholder = document.querySelector('#step6 .selfie-placeholder');
-const selfieInput = document.querySelector('#step6 [name="selfie_con_tarjeta"]');
-
 // Funciones auxiliares
-function skipDocs() {
-    nextStep(5);
-}
-
 function chooseFromGallery() {
     const input = document.querySelector(`#step${currentStep} input[type="file"]`);
     input?.click();
@@ -210,14 +201,23 @@ function closeModal() {
 
 // Enviar formulario final
 function submitForm() {
-    const selfieInput = document.querySelector('input[name="selfie_con_tarjeta"]');
-    if (!selfieInput || !selfieInput.files[0]) {
-        alert('Por favor, toma una selfie con tu tarjeta profesional');
-        return;
+    // Validar documentos mínimos requeridos
+    const requiredDocs = [
+        { name: 'foto_documento_identidad', label: 'Documento de identidad' },
+        { name: 'foto_tarjeta_profesional', label: 'Tarjeta profesional' },
+        { name: 'selfie_con_tarjeta', label: 'Selfie con tarjeta profesional' }
+    ];
+    
+    for (let doc of requiredDocs) {
+        const input = document.querySelector(`input[name="${doc.name}"]`);
+        if (!input || !input.files[0]) {
+            alert(`Por favor, carga tu ${doc.label}`);
+            return;
+        }
     }
 
     // Mostrar loader
-    const btn = document.querySelector('#step6 .btn-next');
+    const btn = document.querySelector('#step4 .btn-next');
     if (btn) {
         btn.textContent = 'Enviando...';
         btn.disabled = true;
@@ -265,4 +265,36 @@ function submitForm() {
             btn.disabled = false;
         }
     });
+}
+
+// Función para mostrar toast de confirmación
+function showToast(message) {
+    // Crear el toast
+    const toast = document.createElement('div');
+    toast.textContent = message;
+    toast.style.cssText = `
+        position: fixed;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #4CAF50;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: 500;
+        z-index: 10000;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        animation: slideUpFade 0.3s ease;
+    `;
+    
+    document.body.appendChild(toast);
+    
+    // Eliminar después de 2 segundos
+    setTimeout(() => {
+        toast.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => {
+            document.body.removeChild(toast);
+        }, 300);
+    }, 2000);
 }
