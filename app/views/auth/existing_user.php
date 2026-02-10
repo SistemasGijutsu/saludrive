@@ -193,7 +193,7 @@
             </svg>
         </div>
         
-        <h1>¡Ya eres miembro de SaluDrive!</h1>
+        <h1>¡Ya eres miembro de SaludGo!</h1>
         
         <div class="info-box">
             <h2>Encontramos tus documentos registrados en una cuenta antigua</h2>
@@ -231,10 +231,9 @@
         }
         
         function confirmRecovery() {
-            // Redirigir a página de recuperación de cuenta
-            alert('Te enviaremos un código de verificación a tu teléfono registrado.');
-            // Aquí puedes implementar la lógica de envío de código
-            window.location.href = '/saludgo/routes/router.php?action=recover_account&user_id=' + userData.id;
+            // Limpiar datos y redirigir a login
+            sessionStorage.removeItem('existingUserData');
+            window.location.href = '/saludgo/public/';
         }
         
         function denyRecovery() {
