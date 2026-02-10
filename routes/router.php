@@ -42,6 +42,10 @@ switch ($action) {
         }
         break;
         
+    case 'check_existing_user':
+        $authController->checkExistingUser();
+        break;
+        
     case 'register_process':
         $rol = $_POST['rol'] ?? 'paciente';
         if ($rol === 'profesional') {
@@ -49,6 +53,10 @@ switch ($action) {
         } else {
             $authController->register();
         }
+        break;
+        
+    case 'existing_user':
+        require_once VIEWS_PATH . 'auth/existing_user.php';
         break;
         
     case 'logout':

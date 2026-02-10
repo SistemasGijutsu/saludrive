@@ -46,8 +46,9 @@ function goNext() {
         if (!validateStep3()) {
             return;
         }
-        saveFormData();
-        nextStep(4);
+        
+        // Validar que el usuario no exista antes de continuar
+        checkExistingUserBeforeContinue();
         return;
     }
     
@@ -56,6 +57,50 @@ function goNext() {
         submitForm();
         return;
     }
+}
+
+// Función para verificar si el usuario ya existe
+function checkExistingUserBeforeContinue() {
+    const form = document.getElementById('professionalForm');
+    const cedula = form.querySelector('[name="cedula"]').value;
+    const email = form.querySelector('[name="email"]').value;
+    
+    // Mostrar loader en el botón
+    const btn = document.querySelector('#step3 .btn-next');
+    const originalText = btn.textContent;
+    btn.textContent = 'Verificando...';
+    btn.disabled = true;
+    
+    // Crear FormData para enviar
+    const checkData = new FormData();
+    checkData.append('cedula', cedula);
+    checkData.append('email', email);
+    
+    fetch('/saludgo/routes/router.php?action=check_existing_user', {
+        method: 'POST',
+        body: checkData
+    })
+    .then(response => response.json())
+    .then(data => {
+        btn.textContent = originalText;
+        btn.disabled = false;
+        
+        if (data.success && data.exists) {
+            // Usuario ya existe - redirigir a pantalla de recuperación
+            sessionStorage.setItem('existingUserData', JSON.stringify(data.user_data));
+            window.location.href = '/saludgo/routes/router.php?action=existing_user';
+        } else {
+            // Usuario no existe - continuar al paso 4
+            saveFormData();
+            nextStep(4);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        btn.textContent = originalText;
+        btn.disabled = false;
+        alert('Error al verificar los datos. Intenta nuevamente.');
+    });
 }
 
 // updateNavButtons eliminada - ya no se necesita
@@ -112,14 +157,19 @@ function validateStep3() {
     const cedula = form.querySelector('[name="cedula"]').value;
     const genero = form.querySelector('[name="genero"]').value;
     const edad = form.querySelector('[name="edad"]').value;
-    const ciudad = form.querySelector('[name="ciudad"]').value;
+    const telefono = form.querySelector('[name="telefono"]').value;
     const email = form.querySelector('[name="email"]').value;
     const password = form.querySelector('[name="password"]').value;
     const transporte = form.querySelector('[name="medio_transporte"]:checked');
     const terminos = form.querySelector('[name="acepta_terminos"]').checked;
 
-    if (!nombre || !cedula || !genero || !edad || !ciudad || !email || !password) {
+    if (!nombre || !cedula || !genero || !edad || !telefono || !email || !password) {
         alert('Por favor, completa todos los campos obligatorios');
+        return false;
+    }
+    
+    if (telefono.length !== 10 || !/^[0-9]+$/.test(telefono)) {
+        alert('El teléfono debe tener 10 dígitos numéricos');
         return false;
     }
 
@@ -249,6 +299,10 @@ function submitForm() {
         if (data.success) {
             alert('Registro exitoso. Tu cuenta está pendiente de verificación.');
             window.location.href = '/saludgo/public/';
+        } else if (data.user_exists) {
+            // Usuario ya existe - guardar datos y redirigir a pantalla de recuperación
+            sessionStorage.setItem('existingUserData', JSON.stringify(data.user_data));
+            window.location.href = '/saludgo/routes/router.php?action=existing_user';
         } else {
             alert('Error: ' + (data.message || 'No se pudo completar el registro'));
             if (btn) {

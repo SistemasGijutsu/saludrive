@@ -102,4 +102,38 @@ class User {
         
         return false;
     }
+    
+    /**
+     * Verificar si existe un profesional con el DNI o email
+     */
+    public function checkExistingProfessional($cedula, $email) {
+        $stmt = $this->db->prepare("
+            SELECT u.*, p.cedula, p.estado_verificacion 
+            FROM usuarios u
+            LEFT JOIN profesionales p ON u.id = p.usuario_id
+            WHERE (p.cedula = :cedula OR u.email = :email) AND u.rol = 'profesional'
+            LIMIT 1
+        ");
+        $stmt->execute(['cedula' => $cedula, 'email' => $email]);
+        return $stmt->fetch();
+    }
+    
+    /**
+     * Obtener teléfono parcialmente oculto del usuario
+     */
+    public function getMaskedPhone($userId) {
+        $stmt = $this->db->prepare("SELECT telefono FROM {$this->table} WHERE id = :id");
+        $stmt->execute(['id' => $userId]);
+        $result = $stmt->fetch();
+        
+        if ($result && !empty($result['telefono'])) {
+            $phone = $result['telefono'];
+            $length = strlen($phone);
+            if ($length > 4) {
+                return substr($phone, 0, 1) . str_repeat('*', $length - 3) . substr($phone, -2);
+            }
+        }
+        
+        return null;
+    }
 }

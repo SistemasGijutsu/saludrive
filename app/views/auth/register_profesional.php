@@ -118,15 +118,9 @@ if (session_status() === PHP_SESSION_NONE) {
                             <input type="number" name="edad" required min="18" max="99">
                         </div>
                         <div class="form-group">
-                            <label>CIUDAD</label>
-                            <select name="ciudad" required>
-                                <option value="">Seleccionar</option>
-                                <option value="Barranquilla">Barranquilla</option>
-                                <option value="Bogotá">Bogotá</option>
-                                <option value="Medellín">Medellín</option>
-                                <option value="Cali">Cali</option>
-                                <option value="Cartagena">Cartagena</option>
-                            </select>
+                            <label>TELÉFONO</label>
+                            <input type="tel" name="telefono" required placeholder="3001234567" pattern="[0-9]{10}" maxlength="10">
+                            <small style="color: #757575; font-size: 12px; display: block; margin-top: 4px;">10 dígitos sin espacios</small>
                         </div>
                     </div>
 
@@ -208,7 +202,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 </div>
                 
                 <div class="nav-buttons">
-                    <button class="btn btn-next" onclick="goNext()">Enviar</button>
+                    <button class="btn btn-next" onclick="goNext()">Enviar Documentos</button>
                 </div>
             </div>
 

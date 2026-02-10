@@ -149,6 +149,56 @@ class AuthController {
     }
     
     /**
+     * Verificar si DNI o email ya existen (validación previa)
+     */
+    public function checkExistingUser() {
+        header('Content-Type: application/json');
+        
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['success' => false, 'message' => 'Método no permitido']);
+            exit;
+        }
+        
+        $cedula = isset($_POST['cedula']) ? trim($_POST['cedula']) : '';
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+        
+        if (empty($cedula) || empty($email)) {
+            echo json_encode(['success' => true, 'exists' => false]);
+            exit;
+        }
+        
+        try {
+            require_once __DIR__ . '/../models/User.php';
+            $userModel = new User();
+            $existingUser = $userModel->checkExistingProfessional($cedula, $email);
+            
+            if ($existingUser) {
+                // Usuario ya existe
+                $maskedPhone = $userModel->getMaskedPhone($existingUser['id']);
+                
+                echo json_encode([
+                    'success' => true,
+                    'exists' => true,
+                    'user_data' => [
+                        'id' => $existingUser['id'],
+                        'nombre' => $existingUser['nombre'],
+                        'email' => $existingUser['email'],
+                        'telefono_oculto' => $maskedPhone,
+                        'estado_verificacion' => $existingUser['estado_verificacion'] ?? 'pendiente'
+                    ]
+                ]);
+            } else {
+                echo json_encode(['success' => true, 'exists' => false]);
+            }
+        } catch (Exception $e) {
+            error_log("Error en checkExistingUser: " . $e->getMessage());
+            echo json_encode(['success' => false, 'message' => 'Error al verificar datos']);
+        }
+        
+        exit;
+    }
+    
+    /**
      * Procesar registro de profesional con documentos
      */
     public function registerProfessional() {
@@ -171,7 +221,7 @@ class AuthController {
             $cedula = isset($_POST['cedula']) ? trim($_POST['cedula']) : '';
             $genero = isset($_POST['genero']) ? trim($_POST['genero']) : '';
             $edad = isset($_POST['edad']) ? intval($_POST['edad']) : 0;
-            $ciudad = isset($_POST['ciudad']) ? trim($_POST['ciudad']) : '';
+            $telefono = isset($_POST['telefono']) ? trim($_POST['telefono']) : '';
             $medio_transporte = isset($_POST['medio_transporte']) ? trim($_POST['medio_transporte']) : '';
             $especialidad_id = isset($_POST['especialidad_id']) ? intval($_POST['especialidad_id']) : 0;
             $acepta_terminos = isset($_POST['acepta_terminos']) ? intval($_POST['acepta_terminos']) : 0;
@@ -190,11 +240,27 @@ class AuthController {
                 exit;
             }
             
-            // Verificar si el email ya existe
-            $stmt = $this->db->prepare("SELECT id FROM usuarios WHERE email = :email");
-            $stmt->execute(['email' => $email]);
-            if ($stmt->fetch()) {
-                echo json_encode(['success' => false, 'message' => 'El correo electrónico ya está registrado']);
+            // Verificar si el DNI o email ya existen
+            require_once __DIR__ . '/../models/User.php';
+            $userModel = new User();
+            $existingUser = $userModel->checkExistingProfessional($cedula, $email);
+            
+            if ($existingUser) {
+                // Usuario ya existe - preparar respuesta con datos para recuperación
+                $maskedPhone = $userModel->getMaskedPhone($existingUser['id']);
+                
+                echo json_encode([
+                    'success' => false,
+                    'user_exists' => true,
+                    'message' => 'Encontramos tus documentos registrados en una cuenta antigua',
+                    'user_data' => [
+                        'id' => $existingUser['id'],
+                        'nombre' => $existingUser['nombre'],
+                        'email' => $existingUser['email'],
+                        'telefono_oculto' => $maskedPhone,
+                        'estado_verificacion' => $existingUser['estado_verificacion'] ?? 'pendiente'
+                    ]
+                ]);
                 exit;
             }
             
@@ -244,8 +310,8 @@ class AuthController {
             // Crear usuario
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
             $stmt = $this->db->prepare("
-                INSERT INTO usuarios (nombre, email, password, rol, genero, edad, ciudad, foto_perfil, fecha_registro, activo, estado_cuenta) 
-                VALUES (:nombre, :email, :password, 'profesional', :genero, :edad, :ciudad, :foto_perfil, NOW(), 1, 'pendiente_verificacion')
+                INSERT INTO usuarios (nombre, email, password, rol, genero, edad, telefono, foto_perfil, fecha_registro, activo, estado_cuenta) 
+                VALUES (:nombre, :email, :password, 'profesional', :genero, :edad, :telefono, :foto_perfil, NOW(), 1, 'pendiente_verificacion')
             ");
             
             $stmt->execute([
@@ -254,7 +320,7 @@ class AuthController {
                 'password' => $hashedPassword,
                 'genero' => $genero,
                 'edad' => $edad,
-                'ciudad' => $ciudad,
+                'telefono' => $telefono,
                 'foto_perfil' => $archivos['foto_perfil'] ?? null
             ]);
             
